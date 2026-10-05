@@ -94,7 +94,7 @@
 <body>
 
 <h1>CareCue Privacy Policy</h1>
-<p class="effective-date"><strong>Last updated / Effective date:</strong> October 3, 2026</p>
+<p class="effective-date"><strong>Last updated / Effective date:</strong> October 5, 2026</p>
 
 <h2>1. Introduction</h2>
 
@@ -110,9 +110,12 @@ the parent using it.</p>
 <ul>
   <li><strong>What CareCue collects:</strong> what you type or choose in the app (your Care
     Shifts, check-ins, and settings), plus a screen-time summary for the apps
-    you personally choose to track. All of that stays on your phone.</li>
-  <li><strong>What ever leaves your device:</strong> a crash report if the app breaks, and
-    two small, routine technical background requests (explained in full in
+    you personally choose to track. CareCue keeps all of that on your phone
+    and never uploads it. (Android&rsquo;s own device backup, if you have it turned
+    on, may also save a copy to your Google Account &mdash; see Section 6.)</li>
+  <li><strong>What ever leaves your device:</strong> a crash report if the app breaks,
+    routine technical information that Firebase&rsquo;s crash-reporting tools send
+    when you open the app, and a small font download (all explained in full in
     Section 5) &mdash; nothing about your Care Shifts, check-ins, or settings is
     ever part of any of them.</li>
   <li><strong>What you can always do:</strong> turn off any permission, delete everything
@@ -233,12 +236,17 @@ form:</p>
 <ul>
   <li><strong>No accounts.</strong> There is no sign-up, sign-in, username, or password
     anywhere in CareCue.</li>
-  <li><strong>No cloud sync or backup of your Care Shift data.</strong> Your Care Shifts,
-    check-ins, and settings are never uploaded anywhere by CareCue.</li>
-  <li><strong>No analytics or behavioral tracking.</strong> CareCue does not use any
-    analytics, advertising, or telemetry tool of any kind &mdash; the only things
-    that ever leave your device are described in full in Section 5, and none
-    of them involve tracking your behavior in the app.</li>
+  <li><strong>No cloud sync or backup run by CareCue.</strong> CareCue never uploads your
+    Care Shifts, check-ins, or settings anywhere, and has no cloud storage of
+    its own. One thing is outside CareCue&rsquo;s control: Android&rsquo;s own device
+    backup, if you have it turned on, may keep a copy of CareCue&rsquo;s data in your
+    Google Account &mdash; see Section 6.</li>
+  <li><strong>No analytics or advertising of its own.</strong> CareCue has no analytics,
+    advertising, or behavior-tracking tool, and does not send anyone what you
+    do inside the app &mdash; which screens you visit, what you tap, or anything
+    about your Care Shifts or check-ins. The only things that ever leave your
+    device are described in full in Section 5, including the routine technical
+    information Firebase&rsquo;s crash-reporting tools send when you open the app.</li>
   <li><strong>No child data.</strong> CareCue has no field for a child&rsquo;s name, birth date,
     photo, or any other identifying information, and never asks for one.</li>
   <li><strong>No location data.</strong> CareCue never requests or reads your location.</li>
@@ -263,20 +271,38 @@ report is a category of technical diagnostic information about your device
 and the failure &mdash; for example, your device model, Android version, the
 app&rsquo;s version number, the error message, and the technical trace of what
 the app was doing at the moment it failed. It never includes your Care
-Shift, check-in, or settings data. Google&rsquo;s crash-reporting tool may also
-generate its own internal technical identifiers as part of how it operates
-(for example, to group crash reports from the same installation) &mdash; this is
-standard behavior of the tool itself, not something CareCue&rsquo;s own code
-requests, sets, or has visibility into.</p>
+Shift, check-in, or settings data. It also carries a randomly generated
+identifier that Firebase creates for your installation of the app, so that
+reports from the same installation can be grouped together. Firebase&rsquo;s
+tools create and handle that identifier &mdash; CareCue&rsquo;s own code does not
+request or set it, and adds nothing else to a report: no custom notes, and
+no user ID, name, or contact detail.</p>
 
-<p>As part of enabling this crash-reporting tool, the underlying Firebase
-software also checks in with Google&rsquo;s servers every time you open the app
-&mdash; not only when something crashes. This is routine technical setup
-required for the crash-reporting tool to be ready if it&rsquo;s ever needed; it
-does not carry any Care Shift, check-in, or settings data, and it is a
-separate thing from an actual crash report being sent.</p>
+<p>Crash reporting also brings two small Firebase components that work in the
+background, not only when something crashes:</p>
 
-<p>There is currently no in-app switch to turn crash reporting off.</p>
+<ul>
+  <li><strong>Firebase Installations</strong> creates the per-installation identifier
+    mentioned above and checks in with Google&rsquo;s servers from time to time to
+    keep it registered. Google describes it as an identifier that does not
+    uniquely identify you or your phone.</li>
+  <li><strong>Firebase Sessions</strong> sends Google a short technical note when you open
+    the app: the app&rsquo;s package name and version, your Android version, the
+    type of internet connection (such as Wi-Fi or mobile), your phone&rsquo;s
+    manufacturer and model, the installation identifier (with the technical
+    token Firebase uses to authenticate it), and when the app was opened.
+    Google uses this to produce crash and performance figures for the app,
+    such as how many people a crash affects.</li>
+</ul>
+
+<p>Both also download their own settings from Google&rsquo;s servers, a request that
+carries technical details such as the installation identifier and your
+phone model. None of this carries any Care Shift, check-in, or settings data,
+and CareCue&rsquo;s own code does not add to it. Google receives this information
+to provide these tools to CareCue.</p>
+
+<p>There is currently no in-app switch to turn crash reporting, or these
+routine check-ins, off.</p>
 
 <h3>Google Fonts &mdash; a design request, not tracking</h3>
 
@@ -300,10 +326,19 @@ request also goes through Google Play directly.</p>
 <h2>6. How your data is stored</h2>
 
 <p>Your Care Shift, check-in, and settings data lives in a local database on
-your device only. CareCue has no cloud storage, no account system, and no
-CareCue-operated server that any of this data is sent to or backed up on.
-If you never install another copy of the app, that data exists in exactly
-one place: your phone.</p>
+your device. CareCue has no cloud storage, no account system, and no
+CareCue-operated server that any of this data is sent to or backed up on &mdash;
+CareCue itself never copies it off your phone.</p>
+
+<p>One thing sits outside CareCue&rsquo;s control: Android&rsquo;s own automatic app
+backup. CareCue has not turned it off, so if you have Google&rsquo;s backup
+turned on for your phone, Android may save a copy of CareCue&rsquo;s local data &mdash;
+including your Care Shift history, check-ins, and settings &mdash; to your own
+Google Account, and may bring it back if you restore or move to a new
+phone. That copy is made and kept by Android and Google under your Google
+Account, not by CareCue, and CareCue cannot see or read it. You can turn
+this backup off, or delete a saved backup, in your phone&rsquo;s and Google
+Account&rsquo;s backup settings.</p>
 
 <h2>7. Data retention and deletion</h2>
 
@@ -312,18 +347,24 @@ your Care Shift history, check-ins, and usage totals, and resets your
 settings back to their defaults. The one thing it deliberately keeps is a
 record of which CareCue Plus plan you&rsquo;re on (if any), so deleting your data
 doesn&rsquo;t accidentally cost you a purchase you&rsquo;ve already made. This action
-cannot be undone.</p>
+cannot be undone.
+Delete all data erases CareCue&rsquo;s copy on your phone; it cannot reach a copy
+that Android&rsquo;s backup may already have saved to your Google Account (see
+Section 6), which can remain until a newer backup replaces it or you delete
+it.</p>
 
 <p><strong>Uninstalling CareCue</strong> removes the app and its local data from your
 device, the same way uninstalling any Android app does. This is standard
-operating-system behavior, not a feature CareCue builds or controls.</p>
+operating-system behavior, not a feature CareCue builds or controls.
+It does not remove a copy that Android&rsquo;s backup may have saved to your
+Google Account (see Section 6).</p>
 
 <h2>8. Your choices and rights</h2>
 
 <p>Because CareCue doesn&rsquo;t have accounts or a company-side database of your
 information, your choices work a little differently than they might with a
 typical app &mdash; everything genuinely available to you lives on your own
-device:</p>
+device or in your own Google Account settings:</p>
 
 <ul>
   <li><strong>Revoke a permission at any time</strong>, through Settings on your phone (for
@@ -333,6 +374,9 @@ device:</p>
   <li><strong>Delete all your data</strong> from within the app at any time (see Section 7).</li>
   <li><strong>Uninstall the app</strong> at any time, which removes CareCue and its local
     data from your device entirely.</li>
+  <li><strong>Turn off or delete Android&rsquo;s backup</strong> in your phone&rsquo;s and Google
+    Account&rsquo;s backup settings at any time, if you&rsquo;d rather no copy of CareCue&rsquo;s
+    data is kept there (see Section 6).</li>
 </ul>
 
 <p>CareCue does not currently offer a way to export a copy of your data, and
